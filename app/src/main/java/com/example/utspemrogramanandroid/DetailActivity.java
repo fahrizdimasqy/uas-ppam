@@ -33,6 +33,12 @@ public class DetailActivity extends AppCompatActivity {
         name.setText(food.getName());
         description.setText(food.getDetail());
         harga.setText("Rp." + food.getPrice());
+        setActionBarTitle(title);
 
+    }
+    private void setActionBarTitle(String title) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
     }
 }
