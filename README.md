@@ -6,7 +6,7 @@ email zerocool5481@gmail.com
 password secret12345
 
 ### Tampilan aplikasi halaman login
-![halaman_login](https://user-images.githubusercontent.com/58032217/148311493-eab6c156-b79c-4f42-8b77-eb3b58886c09.png)
+![halaman_login](https://user-images.githubusercontent.com/58032217/148311493-eab6c156-b79c-4f42-8b77-eb3b58886c09.PNG)
 
 
 ### tampilan apilkasi halaman home
