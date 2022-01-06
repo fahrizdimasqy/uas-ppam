@@ -2,8 +2,8 @@
 # 1197050037-FahrizDimasqy-C-UTS-PPAM
 
 ## Username dan password aplikasi
-username fahriz
-password test12345
+email zerocool5481@gmail.com
+password secret12345
 
 ### Tampilan aplikasi halaman login
 ![halaman_login](https://user-images.githubusercontent.com/58032217/139822969-8e2677f9-1a03-42e5-bfd4-d867d1120ddc.png)
