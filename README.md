@@ -1,5 +1,5 @@
 # uas-ppam
-# 1197050037-FahrizDimasqy-C-UTS-PPAM
+# 1197050037-FahrizDimasqy-C-UAS-PPAM
 
 ## Username dan password aplikasi
 email zerocool5481@gmail.com
