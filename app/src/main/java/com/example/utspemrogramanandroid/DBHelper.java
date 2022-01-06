@@ -1,34 +1,90 @@
 package com.example.utspemrogramanandroid;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
-
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    public DBHelper(@Nullable Context context) {
-        super(context, "sekolah_db", null, 1);
+    // static variable
+    private static final int DATABASE_VERSION = 1;
+
+    // Database name
+    private static final String DATABASE_NAME = "dbFoods";
+
+    // table name
+    private static final String TABLE_MENU = "menus";
+
+    // column tables
+    private static final String KEY_ID = "id";
+    private static final String KEY_TITTLE = "tittle";
+    private static final String KEY_DESCRIPTION = "description";
+    private static final String KEY_PRICE = "price";
+
+    public DB(Context context){
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
-
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        String CREATE_MENUS_TABLE = "CREATE TABLE " + TABLE_MENU + "("
+                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TITTLE + " TEXT,"
+                + KEY_DESCRIPTION + " TEXT," + KEY_PRICE + " TEXT" + ")";
+        sqLiteDatabase.execSQL(CREATE_MENUS_TABLE);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onCreate(db);
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_MENU);
+        onCreate(sqLiteDatabase);
     }
-    public void tambah(SQLiteDatabase db) {
-        String[] nama_sis = new String[] { "Gede", "Okky", "Untung", "Puji", "Willy", "Ayus" };
-        String[] alamat_sis = new String[] { "Denpasar", "Banyuwangi", "Situbondo", "Rogojampi", "Purwoharjo", "Rogojampi" };
-        int lanjut = new Random().nextInt(6);
-        String nama_in = nama_sis[lanjut];
-        String alamat_in = alamat_sis[lanjut];
-        //db.execSQL("");
+
+    public void tambahData(Food menu){
+        SQLiteDatabase sqLiteDatabase  = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_TITTLE, menu.title);
+        values.put(KEY_DESCRIPTION, menu.description);
+        values.put(KEY_PRICE, menu.price);
+
+        sqLiteDatabase.insert(TABLE_MENU, null, values);
+        sqLiteDatabase.close();
+    }
+
+    // get All Record
+    public List<Food> getFoodList(Context context) {
+        List<Food> contactList = new ArrayList<Food>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_MENU;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        ArrayList<Integer> gambar = ListFood.getGambar();
+
+        int index = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                if(index%10==0) {
+                    index = 0;
+                }
+                String title = cursor.getString(1);
+                String description = cursor.getString(2);
+                String price = cursor.getString(3);
+
+                Food menu = new Food(title, description, price, context.getDrawable(gambar.get(index)));
+
+                contactList.add(menu);
+                index++;
+            } while (cursor.moveToNext());
+        }
+
+        // return contact list
+        return contactList;
     }
 }
